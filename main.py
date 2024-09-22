@@ -19,7 +19,7 @@ dic = {"phone": [],"mail":[],"company_name":[],"title":[],"link":[]}
 
 #create a csv file to store the data
 if pnum == 2:
-  with open('data.csv', 'w') as f:
+  with open('data2.csv', 'w') as f:
       f.write("email,phone,company_name,title,link\n")
 
 
@@ -58,7 +58,7 @@ with sync_playwright() as p:
           # extract the email and phone number from the new string
           temp_mail = set([x.group() for x in re.finditer(pattern,new,re.MULTILINE|re.IGNORECASE)])
           temp_phone = set([x.group() for x in re.finditer(pattern1,new,re.MULTILINE|re.IGNORECASE)])
-          print(pnum,temp_mail,temp_phone)
+          print("working on ==>", pnum, temp_mail, temp_phone)
           email = '||'.join(temp_mail)
           phone = '||'.join(temp_phone)
           if email != '' or phone != '':
@@ -71,7 +71,7 @@ with sync_playwright() as p:
             dic["link"].append(post_link)
             # print(email,phone,cn,title)
             # update the csv file
-            with open('data.csv', 'a') as f:
+            with open('data2.csv', 'a') as f:
                 f.write(f"{email},{phone},{cn},{title},{post_link}\n")
         except:
           skip += 1
