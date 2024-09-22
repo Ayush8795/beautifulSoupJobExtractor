@@ -29,10 +29,11 @@ with sync_playwright() as p:
     page = browser.new_page()
     page1 = browser.new_page()
     while pnum < 200:
+      base_url = r"https://www.naukri.com/sales-executive-jobs-in-noida?k=sales%20executive&l=noida%2C%20gurugram%2C%20delhi%20%2F%20ncr&experience=2"
       # url = r"https://www.naukri.com/jobs-in-india-3?functionAreaIdGid=2&functionAreaIdGid=7&functionAreaIdGid=9&functionAreaIdGid=14&jobAge=3"
-      url = r"https://www.naukri.com/hr-executive-jobs-in-gurugram-"+str(pnum)+r"?k=hr+executive&l=gurugram"
-      url2 = r"https://www.naukri.com/hr-executive-jobs-in-gurugram-"+str(pnum)
-      url3= r"https://www.naukri.com/inside-sales-inside-sales-executive-jobs-in-mumbai-"+str(pnum) #+r"?k=inside%20sales%2C%20inside%20sales%20executive&l=mumbai&nignbevent_src=jobsearchDeskGNB"
+      url = r"https://www.naukri.com/sales-executive-jobs-in-noida-"+str(pnum)+r"?k=sales%20executive&l=noida%2C%20gurugram%2C%20delhi%20%2F%20ncr&experience=2"
+      url2 = r"https://www.naukri.com/sales-executive-jobs-in-noida-"+str(pnum)
+      url3= r"https://www.naukri.com/sales-executive-jobs-in-noida-"+str(pnum) #+r"?k=inside%20sales%2C%20inside%20sales%20executive&l=mumbai&nignbevent_src=jobsearchDeskGNB"
       page.goto(url3)
       # page.wait_for_timeout(4000)
       time.sleep(4)
