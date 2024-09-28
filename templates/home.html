@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL and Topic Input</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        input[type="url"], input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="url"] {
+            flex: 2;
+        }
+        input[name="limit[]"] {
+            flex: 0.5;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #inputList {
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #submitButton {
+            background-color: #2ecc71;
+        }
+        #submitButton:hover {
+            background-color: #27ae60;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>URL and Topic Input</h1>
+        <form id="urlTopicForm">
+            <div id="inputList">
+                <div class="input-group">
+                    <input type="url" name="url[]" placeholder="Enter URL" required>
+                    <input type="text" name="topic[]" placeholder="Enter Topic" required>
+                    <input type="text" name="limit[]" placeholder="Enter Page Length" required>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="button" onclick="addInputGroup()">Add More</button>
+                <button type="submit" id="submitButton">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function addInputGroup() {
+            const inputList = document.getElementById('inputList');
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group';
+            newGroup.innerHTML = `
+                <input type="url" name="url[]" placeholder="Enter URL" required>
+                <input type="text" name="topic[]" placeholder="Enter Topic" required>
+                <input type="text" name="limit[]" placeholder="Enter Page Length" required>
+            `;
+            inputList.appendChild(newGroup);
+        }
+
+        document.getElementById('urlTopicForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            fetch('/execute', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Data submitted successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the data.');
+            });
+        });
+    </script>
+</body>
+</html>
