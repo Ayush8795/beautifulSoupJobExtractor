@@ -17,7 +17,7 @@ def extract_content(base_url, count, limit = 20):
 
     for i in range(1, limit + 1):
         driver = Chrome()
-        url = base_url + "-" + str(i)
+        url = base_url + "-" + str(i) + "?experience=2"
         driver.get(url)
         time.sleep(2)
 
