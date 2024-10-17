@@ -62,10 +62,10 @@ def extract_content(base_url, count, limit = 20):
                 
                 if email:
                     with open(f"collected_data_{count}.csv","a") as f:
-                        f.write(f"{email},{mob_number},{company_name}, {job_title}\n")
+                        f.write(f"{email},{mob_number},{company_name}, {job_title}, {page_url}\n")
                 elif mob_number:
                     with open(f"collected_data_{count}.csv","a") as f:
-                        f.write(f"{email},{mob_number},{company_name}, {job_title}\n")
+                        f.write(f"{email},{mob_number},{company_name}, {job_title}, {page_url}\n")
             
             except:
                 print(f"error in {page_url}")
