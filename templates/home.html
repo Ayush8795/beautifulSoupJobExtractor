@@ -87,7 +87,7 @@
                     <input type="url" name="url[]" placeholder="Enter URL" required>
                     <input type="text" name="topic[]" placeholder="Enter Topic" required>
                     <input type="text" name="limit[]" placeholder="Enter Page Length" required>
-                    <input type = "text" name = "experience[]" placeholder="Enter experience (optional)">
+                    <input type = "number" name = "experience[]" placeholder="Enter experience (optional)">
                 </div>
             </div>
             <div class="button-group">
@@ -100,7 +100,22 @@
             <pre id="output" style="background-color: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd; overflow-x: auto;"></pre>
         </div>
     </div>
+
     <script>
+        function addInputGroup() {
+            const inputList = document.getElementById('inputList');
+            const newInputGroup = document.createElement('div');
+            newInputGroup.className = 'input-group';
+
+            newInputGroup.innerHTML = `
+                <input type="url" name="url[]" placeholder="Enter URL" required>
+                <input type="text" name="topic[]" placeholder="Enter Topic" required>
+                <input type="text" name="limit[]" placeholder="Enter Page Length" required>
+                <input type="number" name="experience[]" placeholder="Enter experience (optional)">
+            `;
+
+            inputList.appendChild(newInputGroup);
+        }
         document.getElementById('urlTopicForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const submitButton = document.getElementById('submitButton');
