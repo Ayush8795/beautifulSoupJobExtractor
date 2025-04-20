@@ -20,8 +20,10 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 100%;
-            max-width: 800px;
+            width: 1000px;
+            /* max-width: 800px; */
+            display: flex;
+            flex-direction: column;
         }
         h1 {
             color: #2c3e50;
@@ -85,6 +87,7 @@
                     <input type="url" name="url[]" placeholder="Enter URL" required>
                     <input type="text" name="topic[]" placeholder="Enter Topic" required>
                     <input type="text" name="limit[]" placeholder="Enter Page Length" required>
+                    <input type = "text" name = "experience[]" placeholder="Enter experience (optional)">
                 </div>
             </div>
             <div class="button-group">
@@ -92,39 +95,56 @@
                 <button type="submit" id="submitButton">Submit</button>
             </div>
         </form>
+        <div id="outputContainer" style="display: none; margin-top: 20px;">
+            <h2>Output</h2>
+            <pre id="output" style="background-color: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd; overflow-x: auto;"></pre>
+        </div>
     </div>
-
     <script>
-        function addInputGroup() {
-            const inputList = document.getElementById('inputList');
-            const newGroup = document.createElement('div');
-            newGroup.className = 'input-group';
-            newGroup.innerHTML = `
-                <input type="url" name="url[]" placeholder="Enter URL" required>
-                <input type="text" name="topic[]" placeholder="Enter Topic" required>
-                <input type="text" name="limit[]" placeholder="Enter Page Length" required>
-            `;
-            inputList.appendChild(newGroup);
-        }
-
         document.getElementById('urlTopicForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            
-            fetch('/execute', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert('Data submitted successfully!');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('An error occurred while submitting the data.');
-            });
+        e.preventDefault();
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        const formData = new FormData(this);
+
+        fetch('/execute', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            response = data;
+            console.log('Success:', data);
+
+            // Update the output container with the response
+            const outputContainer = document.getElementById('outputContainer');
+            const outputElement = document.getElementById('output');
+            if (data.statusCode === 400){
+                outputElement.textContent = "Error: " + data.message;
+            } else if (data.statusCode === 200) {
+                outputElement.style.color = 'green';
+                outputElement.textContent = "Success: " + data.message;
+            } else {
+                outputElement.style.color = 'red';
+                outputElement.textContent = "Unknown response: " + JSON.stringify(data);
+            }
+            // outputElement.textContent = JSON.stringify(data, null, 2);
+            outputContainer.style.display = 'block';
+
+            // alert('Data submitted successfully!');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting the data.');
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit';
+        });
         });
     </script>
+    
 </body>
 </html>
