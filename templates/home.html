@@ -105,6 +105,8 @@
         e.preventDefault();
         const submitButton = document.getElementById('submitButton');
         submitButton.disabled = true;
+        submitButton.style.cursor = 'not-allowed';
+        submitButton.style.backgroundColor = '#95a5a6';
         submitButton.textContent = 'Submitting...';
 
         const formData = new FormData(this);
